@@ -1,0 +1,14 @@
+.cardcontentDeath {
+    border: 2px solid red; 
+    align-content: center;
+}
+
+.cardcontentSaved {
+    border: 2px solid rgb(13, 219, 41); 
+    align-content: center;
+}
+
+.cardcontentConfirm {
+    border: 2px solid rgb(233, 179, 4); 
+    align-content: center;
+}

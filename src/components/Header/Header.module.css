@@ -1,0 +1,18 @@
+
+.tittle {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 38px;
+    letter-spacing: 2.6px;
+    word-spacing: 3.4px;
+    color: #d8cece;
+    font-weight: 700;
+    text-decoration: none;
+    font-style: normal;
+    font-variant: normal;
+    text-transform: none;
+}
+
+.fondo {
+    background-color: #173047;
+    padding: 15px;
+}
