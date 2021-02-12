@@ -3,23 +3,17 @@
     padding: 15px;
 }
 
-.fieldset {
-    color:white;
-    align-content: center;
-    margin: 0;
-}
-
-.legend{
-    font-size: 1.2rem;
-    text-align: center;
-}
-
 .input {
     background-color: white;
     width: 100%;
 }
 
-.divider {
-    height: 28;
-    margin: 4;
-  }
+.date {
+    background-color: white;
+}
+
+.inputDate {
+    margin:auto;
+    justify-content: center;
+}
+

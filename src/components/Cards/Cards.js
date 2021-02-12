@@ -1,11 +1,11 @@
 import React, { Fragment, useContext } from 'react';
-import styles from './Global.module.css';
+import styles from './Cards.module.css';
 import {Card, CardContent, Typography} from '@material-ui/core';
 import { ValuesContext } from "../../context/ValuesContext";
 
 
 
-const Global = () => {
+const Cards = () => {
 
     const { values } = useContext(ValuesContext);
 
@@ -77,4 +77,4 @@ const Global = () => {
     );
 }
  
-export default Global;
+export default Cards;
