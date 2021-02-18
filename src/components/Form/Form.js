@@ -1,22 +1,30 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
+
 import styles from './Form.module.css';
 import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
-import {DataCountry} from '../../actions/country';
+
 import DateFnsUtils from "@date-io/date-fns"; 
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import moment from 'moment';
 
-const Form = () => {
+import {DataCountryContext} from '../../context/DataCountryContext';
 
+const Form = ( {setCountry, setSubmitForm} ) => {
+
+    //States
     const [search, setsearch] = useState({
-        country: ''
+        country: '',
+        dateInitial: moment().subtract(2, 'days').format(),
+        dateFinal: moment().subtract(1, 'days').format()
     });
 
-    const [date, setdate] = useState(Date.now());
+    const {country, dateInitial, dateFinal} = search;
 
-    const {country} = search;
+    const {setdataform, setconsult} = useContext(DataCountryContext);
 
+    //Inputs Form
     const handleChange = e => {
         setsearch({
             ...search,
@@ -24,22 +32,46 @@ const Form = () => {
         });
     }
 
-    const handleDateChange = (date) => {
-        setdate(date);
-        //Existe error de hora, ver console
-      };
+    const handleChangeDateInitial = (dateInitial) => {
+        setsearch({
+            ...search,
+            dateInitial: moment(dateInitial).format()
+        })
+    }
 
+    const handleChangeDateFinal = (dateFinal) => {
+        setsearch({
+            ...search,
+            dateFinal: moment(dateFinal).format()
+        })
+    }
 
-
+    //submit form 
     const handleSubmit = e => {
         e.preventDefault();
 
-        if(country.trim() === '' || date.trim() === '') {
+        if(country.trim() === '' || dateInitial.trim() === '' || dateFinal.trim() === '') {
             return;
         }
 
-        DataCountry(country);
+        setCountry(country);
+        axiosDataCountry(country, dateInitial, dateFinal);  
+        setSubmitForm(true);
     }
+
+    //api request
+    const axiosDataCountry = async (country, dateInitial, dateFinal) => {
+
+        try {
+            setdataform(search);
+            setconsult(true);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    
+
+    
 
     return (  
         <form 
@@ -75,15 +107,14 @@ const Form = () => {
             <div className= {`${styles.inputDate} col-6 col-sm-6 col-md-3 mt-2 row`}>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <KeyboardDatePicker
-                        disableToolbar
+                        required
                         variant="inline"
                         className={styles.date}  
-                        format="MM/dd/yyyy"
+                        format="yyyy-MM-dd"
                         label="Fecha inicial"
-                        id="date"
-                        name="date"
-                        value={date}
-                        onChange={handleDateChange}
+                        name="dateInitial"
+                        value={dateInitial}
+                        onChange={handleChangeDateInitial}
                         KeyboardButtonProps={{
                             "aria-label": "change date"
                         }}
@@ -93,15 +124,14 @@ const Form = () => {
             <div className= {`${styles.inputDate} col-6 col-sm-6 col-md-3 mt-2 row`}>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <KeyboardDatePicker
-                        disableToolbar
+                        required
                         variant="inline"
                         className={styles.date}  
-                        format="MM/dd/yyyy"
+                        format="yyyy-MM-dd"
                         label="Fecha final"
-                        id="date"
-                        name="date"
-                        value={date}
-                        onChange={handleDateChange}
+                        name="dateFinal"
+                        value={dateFinal}
+                        onChange={handleChangeDateFinal}
                         KeyboardButtonProps={{
                             "aria-label": "change date"
                         }}

@@ -4,7 +4,7 @@
     font-size: 38px;
     letter-spacing: 2.6px;
     word-spacing: 3.4px;
-    color: #d8cece;
+    color: white;
     font-weight: 700;
     text-decoration: none;
     font-style: normal;
@@ -13,6 +13,6 @@
 }
 
 .fondo {
-    background-color: #173047;
+    background-color: #252B43;
     padding: 15px;
 }

@@ -1,41 +1,47 @@
-import axios from 'axios';
 import React, { createContext, useState, useEffect } from 'react';
+import {summaryGlobal} from '../actions/api';
+
 
 export const ValuesContext = createContext();
 
 const ValuesProvider = (props) => {
 
-    const [values, setvalues] = useState({
-        Global:{}
+    const [valueTotal, setvalues] = useState({
+        Global:{
+            Date: '',
+            NewConfirmed: '',
+            NewDeaths: '',
+            NewRecovered: '',
+            TotalConfirmed: '',
+            TotalDeaths: '',
+            TotalRecovered: ''
+        },
+        Countries:{
+            Country:''
+        }
+
     });
 
 
     useEffect(() => {
 
         const getValues = async () => {
-
-            const url = 'https://api.covid19api.com/summary';
             
             try {
-                const response = await axios.get(url, { 
-                    params:{},
-                    headers: {
-                        "X-Access-Token": "5cf9dfd5-3449-485e-b5ae-70a60e997864"
-                    }
-                });
-                setvalues(response.data);
+                const req = await summaryGlobal();
+                setvalues(req.data);
+
             } catch (error) {
-                console.log("error");
+                console.log(error);
             }
         }
+        getValues(); 
 
-        getValues();
-        
     }, [])
 
     return (  
         <ValuesContext.Provider
-            value={{values}}
+            value={{valueTotal}}
         >
             {props.children}
         </ValuesContext.Provider>

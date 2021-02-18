@@ -1,14 +1,41 @@
 .cardcontentDeath {
-    border: 2px solid red; 
-    align-content: center;
+    color: white;
+    border-top: 10px solid red;
+    background-color: #252B43; 
 }
 
 .cardcontentSaved {
-    border: 2px solid rgb(13, 219, 41); 
-    align-content: center;
+    color: white;
+    border-top: 10px solid rgb(13, 219, 41);
+    background-color: #252B43; 
 }
 
 .cardcontentConfirm {
-    border: 2px solid rgb(233, 179, 4); 
-    align-content: center;
+    color: white;
+    border-top: 10px solid rgb(233, 179, 4); 
+    background-color: #252B43;
+}
+
+.cards {
+    width: 90%;
+    margin: auto;
+}
+
+.content {
+    text-align: left;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.title {
+    color: rgb(156, 148, 148);
+    font-size: 1.2rem;
+}
+
+.value {
+    font-size: 1.3rem;
+}
+
+.titleCard {
+    -webkit-text-stroke: 1px rgb(189, 177, 8); 
+    color: white; 
 }

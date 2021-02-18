@@ -1,77 +1,143 @@
-import React, { Fragment, useContext } from 'react';
+import React, { useContext, Fragment, useState, useEffect } from 'react';
 import styles from './Cards.module.css';
-import {Card, CardContent, Typography} from '@material-ui/core';
+import {Card, CardContent} from '@material-ui/core';
 import { ValuesContext } from "../../context/ValuesContext";
+import {DataCountryContext} from '../../context/DataCountryContext';
+
+const Cards = ({ country, submitForm }) => {
+
+    const { valueTotal } = useContext(ValuesContext);
+
+    const { dataCountry } = useContext(DataCountryContext);
+
+    const countryTotal = valueTotal.Countries;
+
+    //Estado consulta el foreach de busqueda de pais del Summary
+    const [exiscountryTotal, setcountryTotal] = useState(false);
+
+    //Valores de la busqueda de existCountry
+    const [existCountry, setdataCountry] = useState({})
 
 
+    useEffect(() => {
 
-const Cards = () => {
+        if(submitForm) {
+            /*const existCountry = (country) => {
+                countryTotal.forEach(el => {
+                    if(el["Country"] === country) {
+                        console.log(el);
+                        setcountryTotal(true);
+                    } else {
+                        return
+                    }
+                })
+            }*/
+            const existCountry = (country) => {
+                countryTotal.some(data => {
+                    if( data["Country"] === country ) {
+                        setdataCountry(data);
+                        setcountryTotal(true);
+                        console.log(data)
+                    }
+                 })
+            }
+            //existCountry(country)
+            existCountry(country)
+        } 
+    }, [submitForm, country])
 
-    const { values } = useContext(ValuesContext);
+    
 
     const CARDS = [
         {
             id: '1',
             title: 'CONFIRMADOS',
             titleTotal: 'Total',
-            total: `${Intl.NumberFormat("co-CO").format(values.Global.TotalConfirmed)}`,
+            totalGlobal: `${Intl.NumberFormat("co-CO").format(valueTotal.Global.TotalConfirmed)}`,
+            totalCountry: `${Intl.NumberFormat("co-CO").format(existCountry.TotalConfirmed)}`,
             titleNew: 'Nuevos',
-            new: `${Intl.NumberFormat("co-CO").format(values.Global.NewConfirmed)}`,
+            newGlobal: `${Intl.NumberFormat("co-CO").format(valueTotal.Global.NewConfirmed)}`,
+            newCountry: `${Intl.NumberFormat("co-CO").format(existCountry.NewConfirmed)}`,
             style: `${styles.cardcontentConfirm}`
         },
         {
             id: '2',
             title: 'MUERTES',
             titleTotal: 'Total',
-            total: `${Intl.NumberFormat("co-CO").format(values.Global.TotalDeaths)}`,
+            totalGlobal: `${Intl.NumberFormat("co-CO").format(valueTotal.Global.TotalDeaths)}`,
+            totalCountry: `${Intl.NumberFormat("co-CO").format(existCountry.TotalDeaths)}`,
             titleNew: 'Nuevos',
-            new: `${Intl.NumberFormat("co-CO").format(values.Global.NewDeaths)}`,
+            newGlobal: `${Intl.NumberFormat("co-CO").format(valueTotal.Global.NewDeaths)}`,
+            newCountry: `${Intl.NumberFormat("co-CO").format(existCountry.NewDeaths)}`,
             style: `${styles.cardcontentDeath}`
         },
         {
             id: '3',
             title: 'RECUPERADOS',
             titleTotal: 'Total',
-            total: `${Intl.NumberFormat("co-CO").format(values.Global.TotalRecovered)}`,
+            totalGlobal: `${Intl.NumberFormat("co-CO").format(valueTotal.Global.TotalRecovered)}`,
+            totalCountry: `${Intl.NumberFormat("co-CO").format(existCountry.TotalRecovered)}`,
             titleNew: 'Nuevos',
-            new: `${Intl.NumberFormat("co-CO").format(values.Global.NewRecovered)}`,
+            newGlobal: `${Intl.NumberFormat("co-CO").format(valueTotal.Global.NewRecovered)}`,
+            newCountry: `${Intl.NumberFormat("co-CO").format(existCountry.NewRecovered)}`,
             style: `${styles.cardcontentSaved}`
         },
     ]
 
 
-    return (  
+
+    return (
+          
         <div className= "text-center">
             {CARDS.map(card => (
-                <Fragment>
-                    <h2>{card.title}</h2>
-                    <div className="row pb-4 pt-2">
-                        <div className="col-md-6">
-                            <Card variant="outlined">
-                                <CardContent className={card.style}>
-                                    <Typography variant="h5">   
-                                        {card.titleTotal}
-                                    </Typography>
-                                    <Typography className="pt-2">   
-                                        {card.total}
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        </div>
-                        <div className="col-md-6">
-                            <Card variant="outlined">
-                                <CardContent className={card.style}>
-                                    <Typography variant="h5">   
-                                        {card.titleNew}
-                                    </Typography>
-                                    <Typography className="pt-2">   
-                                        {card.new}
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        </div>
+                <div className={`${styles.cards} row pb-2`}>
+                    <div className="col-12 col-md-10 col-sm-10">
+                        <Card variant="outlined" key={card.id}>
+                            <CardContent className={card.style} key={card.id}>
+                                <h4 className={styles.titleCard}>{card.title}</h4>
+                                <div className={styles.content}>
+                                    {(Object.entries(dataCountry).length === 0)
+                                        ? 
+                                        (
+                                            <Fragment>
+                                                <div className="row">
+                                                    <div className={`${styles.title} col-4`}>Pais</div>
+                                                    <div className={`${styles.value} col-8`}>Global</div>
+                                                </div>
+                                                <div className="row">
+                                                    <div className={`${styles.title} col-4`}>{card.titleTotal}</div>
+                                                    <div className={`${styles.value} col-8`}>{card.totalGlobal} </div>
+                                                </div>
+                                                <div className="row">
+                                                    <div className={`${styles.title} col-4`}>{card.titleNew}</div>
+                                                    <div className={`${styles.value} col-8`}>{card.newGlobal}</div>
+                                                </div>
+                                            </Fragment>
+                                        )
+                                        :
+                                        (  
+                                            <Fragment>
+                                                <div className="row">
+                                                    <div className={`${styles.title} col-4`}>Pais</div>
+                                                    <div className={`${styles.value} col-8`}>{ exiscountryTotal ? existCountry.Country : 'Global'} </div>
+                                                </div>
+                                                <div className="row">
+                                                    <div className={`${styles.title} col-4`}>{card.titleTotal}</div>
+                                                    <div className={`${styles.value} col-8`}>{ exiscountryTotal ? card.totalCountry : card.totalGlobal}</div>
+                                                </div>
+                                                <div className="row">
+                                                    <div className={`${styles.title} col-4`}>{card.titleNew}</div>
+                                                    <div className={`${styles.value} col-8`}>{ exiscountryTotal ? card.newCountry : card.newGlobal} </div>
+                                                </div>
+                                            </Fragment>
+                                        ) 
+                                    }
+                                    
+                                </div>
+                            </CardContent>
+                        </Card>
                     </div>
-                </Fragment>
+                </div>
             ))}  
         </div>
     );
