@@ -69,9 +69,6 @@ const Form = ( {setCountry, setSubmitForm} ) => {
             console.log(error);
         }
     }
-    
-
-    
 
     return (  
         <form 
@@ -108,7 +105,6 @@ const Form = ( {setCountry, setSubmitForm} ) => {
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <KeyboardDatePicker
                         required
-                        variant="inline"
                         className={styles.date}  
                         format="yyyy-MM-dd"
                         label="Fecha inicial"
@@ -125,7 +121,6 @@ const Form = ( {setCountry, setSubmitForm} ) => {
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <KeyboardDatePicker
                         required
-                        variant="inline"
                         className={styles.date}  
                         format="yyyy-MM-dd"
                         label="Fecha final"

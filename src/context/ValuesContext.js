@@ -15,11 +15,7 @@ const ValuesProvider = (props) => {
             TotalConfirmed: '',
             TotalDeaths: '',
             TotalRecovered: ''
-        },
-        Countries:{
-            Country:''
         }
-
     });
 
 

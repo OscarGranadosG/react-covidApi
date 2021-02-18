@@ -34,7 +34,7 @@ const DataCountryProvider = (props) => {
             getDataCountry();
         }
     
-    }, [dataform])
+    }, [dataform,country,dateInitial,dateFinal,consult])
 
     return (  
         <DataCountryContext.Provider

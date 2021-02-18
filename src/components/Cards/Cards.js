@@ -2,13 +2,10 @@ import React, { useContext, Fragment, useState, useEffect } from 'react';
 import styles from './Cards.module.css';
 import {Card, CardContent} from '@material-ui/core';
 import { ValuesContext } from "../../context/ValuesContext";
-import {DataCountryContext} from '../../context/DataCountryContext';
 
 const Cards = ({ country, submitForm }) => {
 
     const { valueTotal } = useContext(ValuesContext);
-
-    const { dataCountry } = useContext(DataCountryContext);
 
     const countryTotal = valueTotal.Countries;
 
@@ -22,29 +19,17 @@ const Cards = ({ country, submitForm }) => {
     useEffect(() => {
 
         if(submitForm) {
-            /*const existCountry = (country) => {
-                countryTotal.forEach(el => {
-                    if(el["Country"] === country) {
-                        console.log(el);
-                        setcountryTotal(true);
-                    } else {
-                        return
-                    }
-                })
-            }*/
             const existCountry = (country) => {
                 countryTotal.some(data => {
                     if( data["Country"] === country ) {
                         setdataCountry(data);
                         setcountryTotal(true);
-                        console.log(data)
                     }
                  })
             }
-            //existCountry(country)
             existCountry(country)
         } 
-    }, [submitForm, country])
+    }, [submitForm, country, countryTotal])
 
     
 
@@ -87,52 +72,30 @@ const Cards = ({ country, submitForm }) => {
 
 
     return (
-          
+        <Fragment>
         <div className= "text-center">
             {CARDS.map(card => (
-                <div className={`${styles.cards} row pb-2`}>
+                <div className={`${styles.cards} row pb-2`} key={card.id}>
                     <div className="col-12 col-md-10 col-sm-10">
-                        <Card variant="outlined" key={card.id}>
-                            <CardContent className={card.style} key={card.id}>
+                        <Card variant="outlined" >
+                            <CardContent className={card.style} >
                                 <h4 className={styles.titleCard}>{card.title}</h4>
                                 <div className={styles.content}>
-                                    {(Object.entries(dataCountry).length === 0)
-                                        ? 
-                                        (
-                                            <Fragment>
-                                                <div className="row">
-                                                    <div className={`${styles.title} col-4`}>Pais</div>
-                                                    <div className={`${styles.value} col-8`}>Global</div>
-                                                </div>
-                                                <div className="row">
-                                                    <div className={`${styles.title} col-4`}>{card.titleTotal}</div>
-                                                    <div className={`${styles.value} col-8`}>{card.totalGlobal} </div>
-                                                </div>
-                                                <div className="row">
-                                                    <div className={`${styles.title} col-4`}>{card.titleNew}</div>
-                                                    <div className={`${styles.value} col-8`}>{card.newGlobal}</div>
-                                                </div>
-                                            </Fragment>
-                                        )
-                                        :
-                                        (  
-                                            <Fragment>
-                                                <div className="row">
-                                                    <div className={`${styles.title} col-4`}>Pais</div>
-                                                    <div className={`${styles.value} col-8`}>{ exiscountryTotal ? existCountry.Country : 'Global'} </div>
-                                                </div>
-                                                <div className="row">
-                                                    <div className={`${styles.title} col-4`}>{card.titleTotal}</div>
-                                                    <div className={`${styles.value} col-8`}>{ exiscountryTotal ? card.totalCountry : card.totalGlobal}</div>
-                                                </div>
-                                                <div className="row">
-                                                    <div className={`${styles.title} col-4`}>{card.titleNew}</div>
-                                                    <div className={`${styles.value} col-8`}>{ exiscountryTotal ? card.newCountry : card.newGlobal} </div>
-                                                </div>
-                                            </Fragment>
-                                        ) 
-                                    }
-                                    
+                                    <Fragment >
+                                        <div className="row">
+                                            <div className={`${styles.title} col-4`}>Pais</div>
+                                            <div className={`${styles.value} col-8`}>{ exiscountryTotal ? existCountry.Country : 'Global'} </div>
+                                        </div>
+                                        <div className="row">
+                                            <div className={`${styles.title} col-4`}>{card.titleTotal}</div>
+                                            <div className={`${styles.value} col-8`}>{ exiscountryTotal ? card.totalCountry : card.totalGlobal}</div>
+                                        </div>
+                                        <div className="row">
+                                            <div className={`${styles.title} col-4`}>{card.titleNew}</div>
+                                            <div className={`${styles.value} col-8`}>{ exiscountryTotal ? card.newCountry : card.newGlobal} </div>
+                                        </div>
+                                    </Fragment>
+                            
                                 </div>
                             </CardContent>
                         </Card>
@@ -140,6 +103,7 @@ const Cards = ({ country, submitForm }) => {
                 </div>
             ))}  
         </div>
+        </Fragment>
     );
 }
  
