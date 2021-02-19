@@ -9,6 +9,9 @@ import DateFnsUtils from "@date-io/date-fns";
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import moment from 'moment';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import {DataCountryContext} from '../../context/DataCountryContext';
 
 const Form = ( {setCountry, setSubmitForm} ) => {
@@ -54,6 +57,11 @@ const Form = ( {setCountry, setSubmitForm} ) => {
             return;
         }
 
+        if(dateInitial > dateFinal || moment(dateInitial).format("YYYY-MM-DD") === moment(dateFinal).format("YYYY-MM-DD") ) {
+            toast.error("La fecha inicial no puede ser igual o mayor a fecha final");
+            return;
+        }
+
         setCountry(country);
         axiosDataCountry(country, dateInitial, dateFinal);  
         setSubmitForm(true);
@@ -66,22 +74,23 @@ const Form = ( {setCountry, setSubmitForm} ) => {
             setdataform(search);
             setconsult(true);
         } catch (error) {
-            console.log(error);
         }
     }
+
 
     return (  
         <form 
             className={`${styles.fondo}`}
             onSubmit={handleSubmit}        
         >
+        <ToastContainer />
         <div className="row "> 
             <div className= "col-12 col-sm-12 col-md-6 mt-2">
                 <TextField 
                     required 
                     id="country"
                     name="country"
-                    label="Escribe el nombre del pais" 
+                    label="Escribe el nombre o dominio del pais" 
                     variant="filled"
                     size="small"
                     color="primary"

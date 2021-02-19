@@ -1,6 +1,9 @@
 import React, { createContext, useState, useEffect } from 'react';
 import {summaryGlobal} from '../actions/api';
 
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 export const ValuesContext = createContext();
 
@@ -26,9 +29,8 @@ const ValuesProvider = (props) => {
             try {
                 const req = await summaryGlobal();
                 setvalues(req.data);
-
             } catch (error) {
-                console.log(error);
+                toast.error("Upss!! \n Recarga la pagina en unos instantes")
             }
         }
         getValues(); 

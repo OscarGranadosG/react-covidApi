@@ -22,7 +22,7 @@ function App() {
     return (
         <ValuesProvider>
             <Header
-                tittle ={"Coronavirus Data"}
+                tittle ={"COVID-19"}
             />
             <DataCountryProvider>
                 <Form 

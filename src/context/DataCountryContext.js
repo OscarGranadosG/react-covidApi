@@ -1,6 +1,9 @@
 import React, { createContext, useEffect, useState } from 'react';
 import {dataCountryByDate} from '../actions/api';
 
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 export const DataCountryContext = createContext();
 
 const DataCountryProvider = (props) => {
@@ -24,11 +27,11 @@ const DataCountryProvider = (props) => {
 
                 try {
                     const req = await dataCountryByDate({country, dateInitial, dateFinal});
+                    toast.success("Informacion encontrada de " + country)
                     setDataCountry(req.data);
                 } catch (error) {
-                    console.log(error)
+                    toast.error("No existe información de " + country)
                 }
-    
             }
 
             getDataCountry();

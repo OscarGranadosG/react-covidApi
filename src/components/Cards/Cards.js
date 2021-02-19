@@ -21,7 +21,7 @@ const Cards = ({ country, submitForm }) => {
         if(submitForm) {
             const existCountry = (country) => {
                 countryTotal.some(data => {
-                    if( data["Country"] === country ) {
+                    if( (data["Country"] === country.charAt(0).toUpperCase() + country.slice(1)) || (data["CountryCode"] === country.toUpperCase())) {
                         setdataCountry(data);
                         setcountryTotal(true);
                     }
@@ -30,8 +30,6 @@ const Cards = ({ country, submitForm }) => {
             existCountry(country)
         } 
     }, [submitForm, country, countryTotal])
-
-    
 
     const CARDS = [
         {
@@ -72,7 +70,6 @@ const Cards = ({ country, submitForm }) => {
 
 
     return (
-        <Fragment>
         <div className= "text-center">
             {CARDS.map(card => (
                 <div className={`${styles.cards} row pb-2`} key={card.id}>
@@ -103,7 +100,6 @@ const Cards = ({ country, submitForm }) => {
                 </div>
             ))}  
         </div>
-        </Fragment>
     );
 }
  

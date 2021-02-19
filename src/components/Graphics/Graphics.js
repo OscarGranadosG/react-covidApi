@@ -1,16 +1,11 @@
-import React, { useContext } from 'react';
+import React from 'react';
 //import {DataCountryContext} from '../../context/DataCountryContext';
-import { ValuesContext } from "../../context/ValuesContext";
 
 
 
 const Graphics = () => {
 
     //const {setdataform, setconsult, dataCountry} = useContext(DataCountryContext);
-
-    const { valueTotal } = useContext(ValuesContext);
-
-    console.log(valueTotal)
 
     return (  
         <div>
