@@ -38,7 +38,9 @@ function App() {
                                 />
                             </div>
                             <div className="col-md-6">
-                                <Graphics />     
+                                <Graphics 
+                                    submitForm = {submitForm}
+                                />     
                             </div>
                         </div>
                     </div>

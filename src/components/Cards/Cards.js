@@ -25,6 +25,7 @@ const Cards = ({ country, submitForm }) => {
                         setdataCountry(data);
                         setcountryTotal(true);
                     }
+                    return setcountryTotal(true);
                  })
             }
             existCountry(country)
